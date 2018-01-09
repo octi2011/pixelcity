@@ -148,6 +148,11 @@ extension MapVC : MKMapViewDelegate {
         removeProgressLbl()
         cancelAllSessions()
         
+        imageURLArray = []
+        imageArray = []
+        
+        collectionView?.reloadData()
+        
         animateViewUp()
         addSwipe()
         addSpinner()
@@ -174,6 +179,7 @@ extension MapVC : MKMapViewDelegate {
                         // hide the spinner
                         self.removeSpinner()
                         // reload collectionView
+                        self.collectionView?.reloadData()
                     }
                 })
             }
@@ -187,9 +193,8 @@ extension MapVC : MKMapViewDelegate {
     }
     
     func retrieveURLs(forAnnotation annotation: DroppablePin, handler: @escaping (_ status: Bool) -> ()) {
-        imageURLArray = []
         
-        Alamofire.request(flickrURL(forApiKey: apiKey, withAnnotation: annotation, andNumberOfPhotos: 20)).responseJSON(completionHandler: { (response) in
+        Alamofire.request(flickrURL(forApiKey: apiKey, withAnnotation: annotation, andNumberOfPhotos: 40)).responseJSON(completionHandler: { (response) in
             guard let json = response.result.value as? Dictionary<String, AnyObject> else { return }
             let photosDict = json["photos"] as! Dictionary<String, AnyObject>
             let photosDictArray = photosDict["photo"] as! [Dictionary<String, AnyObject>]
@@ -202,14 +207,13 @@ extension MapVC : MKMapViewDelegate {
     }
     
     func retrieveImages(handler: @escaping (_ status: Bool) -> ()) {
-        imageArray = []
         
         for url in imageURLArray {
             // Alamofire Image
             Alamofire.request(url).responseImage(completionHandler: { (response) in
                 guard let image = response.result.value else { return }
                 self.imageArray.append(image)
-                self.progressLbl?.text = "\(self.imageArray.count)/20 Photos Loaded"
+                self.progressLbl?.text = "\(self.imageArray.count)/40 Photos Loaded"
                 
                 if self.imageArray.count == self.imageURLArray.count {
                     handler(true)
@@ -242,8 +246,11 @@ extension MapVC : CLLocationManagerDelegate {
 
 extension MapVC : UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for: indexPath) as? PhotoCell
-        return cell!
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for: indexPath) as? PhotoCell else { return UICollectionViewCell() }
+        let imageFromIndex = imageArray[indexPath.row]
+        let imageView = UIImageView(image: imageFromIndex)
+        cell.addSubview(imageView)
+        return cell
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -251,6 +258,6 @@ extension MapVC : UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return imageArray.count
     }
 }
