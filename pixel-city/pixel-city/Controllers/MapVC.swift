@@ -36,6 +36,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate {
     var collectionView: UICollectionView?
     
     var imageURLArray = [String]()
+    var imageArray = [UIImage]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +52,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate {
         
         collectionView?.delegate = self
         collectionView?.dataSource = self
-        collectionView?.backgroundColor = #colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1)
+        collectionView?.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         
         pullUpView.addSubview(collectionView!)
     }
@@ -77,6 +78,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate {
     }
     
     @objc func animateViewDown() {
+        cancelAllSessions() //cancels the sessions when we swipe down the view
         pullUpViewHeightConstraint.constant = 0
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
@@ -104,7 +106,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate {
         progressLbl?.font = UIFont(name: "Avenir Next", size: 18)
         progressLbl?.textColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
         progressLbl?.textAlignment = .center
-        progressLbl?.text = "30/40 Photos Loaded"
+        progressLbl?.text = ""
         collectionView?.addSubview(progressLbl!)
     }
     
@@ -144,6 +146,7 @@ extension MapVC : MKMapViewDelegate {
         removePin()
         removeSpinner()
         removeProgressLbl()
+        cancelAllSessions()
         
         animateViewUp()
         addSwipe()
@@ -162,8 +165,18 @@ extension MapVC : MKMapViewDelegate {
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(touchCoordinate, regionRadius*2, regionRadius*2)
         mapView.setRegion(coordinateRegion, animated: true)
         
-        retrieveURLs(forAnnotation: annotation) { (true) in
-            print(self.imageURLArray)
+        retrieveURLs(forAnnotation: annotation) { (finished) in
+            if finished {
+                self.retrieveImages(handler: { (finished) in
+                    if finished {
+                        // hide the label
+                        self.removeProgressLbl()
+                        // hide the spinner
+                        self.removeSpinner()
+                        // reload collectionView
+                    }
+                })
+            }
         }
     }
     
@@ -186,6 +199,30 @@ extension MapVC : MKMapViewDelegate {
             }
             handler(true)
          })
+    }
+    
+    func retrieveImages(handler: @escaping (_ status: Bool) -> ()) {
+        imageArray = []
+        
+        for url in imageURLArray {
+            // Alamofire Image
+            Alamofire.request(url).responseImage(completionHandler: { (response) in
+                guard let image = response.result.value else { return }
+                self.imageArray.append(image)
+                self.progressLbl?.text = "\(self.imageArray.count)/20 Photos Loaded"
+                
+                if self.imageArray.count == self.imageURLArray.count {
+                    handler(true)
+                }
+            })
+        }
+    }
+    
+    func cancelAllSessions() {
+        Alamofire.SessionManager.default.session.getTasksWithCompletionHandler { (sessionDataTask, uploadData, downloadData) in
+            sessionDataTask.forEach({ $0.cancel() }) //single line for loop
+            downloadData.forEach({ $0.cancel() })
+        }
     }
 }
 
