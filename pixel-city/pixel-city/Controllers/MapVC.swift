@@ -21,6 +21,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate {
     // Outlets
     @IBOutlet weak var mapView: MKMapView!
     
+    @IBOutlet weak var mapBottomConstraint: NSLayoutConstraint!
     // Variables
     var locationManager = CLLocationManager()
     
@@ -33,6 +34,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate {
     var spinner: UIActivityIndicatorView?
     var progressLbl: UILabel?
     
+    @IBOutlet weak var mapTopConstraint: NSLayoutConstraint!
     var flowLayout = UICollectionViewFlowLayout() // in order to create a collection view programmatically we need a flow layout
     var collectionView: UICollectionView?
     
@@ -75,7 +77,6 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate {
     
     func animateViewUp() {
         pullUpViewHeightConstraint.constant = 300
-        buttonConstraint.constant += 300
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
@@ -85,6 +86,8 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate {
         cancelAllSessions() //cancels the sessions when we swipe down the view
         pullUpViewHeightConstraint.constant = 0
         buttonConstraint.constant -= 300
+        mapBottomConstraint.constant -= 300
+        mapTopConstraint.constant -= 70
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
@@ -123,7 +126,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate {
     
     @IBAction func centerMapBtnWasPressed(_ sender: Any) {
         if authorizationStatus == .authorizedAlways || authorizationStatus == .authorizedWhenInUse {
-            centerMapOnUserLocation()
+                centerMapOnUserLocation()
         }
     }
 }
@@ -152,6 +155,12 @@ extension MapVC : MKMapViewDelegate {
         removeSpinner()
         removeProgressLbl()
         cancelAllSessions()
+        
+        if buttonConstraint.constant < 100 {
+            buttonConstraint.constant += 300
+            mapBottomConstraint.constant += 300
+            mapTopConstraint.constant += 70
+        }
         
         imageURLArray = []
         imageArray = []

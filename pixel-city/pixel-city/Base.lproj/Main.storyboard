@@ -88,6 +88,8 @@
                     </view>
                     <connections>
                         <outlet property="buttonConstraint" destination="iIb-KR-mkD" id="YKM-8g-UEC"/>
+                        <outlet property="mapBottomConstraint" destination="VvB-Lk-67P" id="GPH-6U-NCx"/>
+                        <outlet property="mapTopConstraint" destination="HKU-0A-pZd" id="Fhv-Tr-TiP"/>
                         <outlet property="mapView" destination="FAi-J2-ZpP" id="Mcs-Eu-Woy"/>
                         <outlet property="pullUpView" destination="1sQ-AQ-5nX" id="QfL-IM-9m8"/>
                         <outlet property="pullUpViewHeightConstraint" destination="5xw-RX-ofb" id="ysv-ms-L6r"/>
