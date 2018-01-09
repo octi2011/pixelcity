@@ -33,13 +33,13 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FIM-ht-iox">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Double tap to drop a pin and view photos" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iYL-NW-wrI">
-                                        <rect key="frame" x="23" y="23" width="329" height="24"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Double tap to drop a pin and view photos" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iYL-NW-wrI">
+                                        <rect key="frame" x="62.5" y="25" width="250" height="40"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="24" id="fwo-Ob-Her"/>
-                                            <constraint firstAttribute="width" constant="329" id="guQ-b3-rMl"/>
+                                            <constraint firstAttribute="height" constant="40" id="fwo-Ob-Her"/>
+                                            <constraint firstAttribute="width" constant="250" id="guQ-b3-rMl"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="17"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="14"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -48,7 +48,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="8ow-sU-lgz"/>
                                     <constraint firstItem="iYL-NW-wrI" firstAttribute="centerX" secondItem="FIM-ht-iox" secondAttribute="centerX" id="wlD-V2-ClR"/>
-                                    <constraint firstItem="iYL-NW-wrI" firstAttribute="centerY" secondItem="FIM-ht-iox" secondAttribute="centerY" id="xPC-Nt-2GS"/>
+                                    <constraint firstItem="iYL-NW-wrI" firstAttribute="centerY" secondItem="FIM-ht-iox" secondAttribute="centerY" constant="10" id="xPC-Nt-2GS"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rDd-WH-iBw">
