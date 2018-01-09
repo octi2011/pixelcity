@@ -78,7 +78,7 @@
                             <constraint firstAttribute="trailing" secondItem="FIM-ht-iox" secondAttribute="trailing" id="QUM-ok-0yf"/>
                             <constraint firstItem="1sQ-AQ-5nX" firstAttribute="bottom" secondItem="FAi-J2-ZpP" secondAttribute="bottom" id="VvB-Lk-67P"/>
                             <constraint firstItem="FIM-ht-iox" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="hif-iC-rnm"/>
-                            <constraint firstItem="FAi-J2-ZpP" firstAttribute="bottom" secondItem="rDd-WH-iBw" secondAttribute="bottom" constant="20" id="iIb-KR-mkD"/>
+                            <constraint firstItem="1sQ-AQ-5nX" firstAttribute="bottom" secondItem="rDd-WH-iBw" secondAttribute="bottom" constant="20" id="iIb-KR-mkD"/>
                             <constraint firstAttribute="trailing" secondItem="1sQ-AQ-5nX" secondAttribute="trailing" id="kug-qq-Ild"/>
                             <constraint firstItem="FAi-J2-ZpP" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="p39-Eq-lIK"/>
                             <constraint firstItem="FIM-ht-iox" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="r85-G0-uVd"/>
@@ -87,6 +87,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="buttonConstraint" destination="iIb-KR-mkD" id="YKM-8g-UEC"/>
                         <outlet property="mapView" destination="FAi-J2-ZpP" id="Mcs-Eu-Woy"/>
                         <outlet property="pullUpView" destination="1sQ-AQ-5nX" id="QfL-IM-9m8"/>
                         <outlet property="pullUpViewHeightConstraint" destination="5xw-RX-ofb" id="ysv-ms-L6r"/>
@@ -95,6 +96,63 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="136.80000000000001" y="132.68365817091455"/>
+        </scene>
+        <!--PopVC-->
+        <scene sceneID="S4z-Pf-ml9">
+            <objects>
+                <viewController storyboardIdentifier="PopVC" id="hUs-yC-Tch" customClass="PopVC" customModule="pixel_city" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Wof-bt-Rn8"/>
+                        <viewControllerLayoutGuide type="bottom" id="dSs-gL-NO0"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="TSD-Je-Zwp">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XQS-dB-vYp">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e9y-UB-93K" customClass="RoundedView" customModule="pixel_city" customModuleProvider="target">
+                                <rect key="frame" x="99.5" y="622" width="175" height="25"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Double tap to dismiss" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xec-aI-nBD">
+                                        <rect key="frame" x="7.5" y="2" width="161" height="22"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="16"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="132-kV-Lb6"/>
+                                    <constraint firstItem="xec-aI-nBD" firstAttribute="centerX" secondItem="e9y-UB-93K" secondAttribute="centerX" id="47q-Pl-3oo"/>
+                                    <constraint firstItem="xec-aI-nBD" firstAttribute="centerY" secondItem="e9y-UB-93K" secondAttribute="centerY" id="Wya-WX-wzP"/>
+                                    <constraint firstAttribute="width" constant="175" id="rNN-7N-WQ3"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="7"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.95294117649999999" green="0.95294117649999999" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="XQS-dB-vYp" firstAttribute="leading" secondItem="TSD-Je-Zwp" secondAttribute="leading" id="8UL-B0-H1n"/>
+                            <constraint firstItem="e9y-UB-93K" firstAttribute="centerX" secondItem="TSD-Je-Zwp" secondAttribute="centerX" id="IKc-0H-0hp"/>
+                            <constraint firstItem="XQS-dB-vYp" firstAttribute="top" secondItem="TSD-Je-Zwp" secondAttribute="top" id="Jms-I2-WIV"/>
+                            <constraint firstItem="dSs-gL-NO0" firstAttribute="top" secondItem="XQS-dB-vYp" secondAttribute="bottom" id="mJ7-gC-qEo"/>
+                            <constraint firstItem="dSs-gL-NO0" firstAttribute="top" secondItem="e9y-UB-93K" secondAttribute="bottom" constant="20" id="sEL-sP-hPl"/>
+                            <constraint firstAttribute="trailing" secondItem="XQS-dB-vYp" secondAttribute="trailing" id="vB0-Tg-1OW"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="popImageView" destination="XQS-dB-vYp" id="zyk-y9-WbG"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VhJ-Jd-JZL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="829.60000000000002" y="134.48275862068968"/>
         </scene>
     </scenes>
     <resources>

@@ -14,6 +14,7 @@ import AlamofireImage
 
 class MapVC: UIViewController, UIGestureRecognizerDelegate {
     
+    @IBOutlet weak var buttonConstraint: NSLayoutConstraint!
     @IBOutlet weak var pullUpView: UIView!
     @IBOutlet weak var pullUpViewHeightConstraint: NSLayoutConstraint!
     
@@ -25,7 +26,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate {
     
     // Constants
     let authorizationStatus = CLLocationManager.authorizationStatus()
-    let regionRadius: Double = 1000
+    let regionRadius: Double = 500
     
     var screensize = UIScreen.main.bounds
     
@@ -72,6 +73,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate {
     
     func animateViewUp() {
         pullUpViewHeightConstraint.constant = 300
+        buttonConstraint.constant += 300
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
@@ -80,6 +82,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate {
     @objc func animateViewDown() {
         cancelAllSessions() //cancels the sessions when we swipe down the view
         pullUpViewHeightConstraint.constant = 0
+        buttonConstraint.constant -= 300
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
@@ -259,5 +262,11 @@ extension MapVC : UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return imageArray.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let popVC = storyboard?.instantiateViewController(withIdentifier: "PopVC") as? PopVC else { return }
+        popVC.initData(forImage: imageArray[indexPath.row])
+        present(popVC, animated: true, completion: nil)
     }
 }
